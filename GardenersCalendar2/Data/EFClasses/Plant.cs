@@ -3,13 +3,13 @@
     public class Plant
     {
         public int PlantId { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
         public string? Description { get; set; }
-        public List<Job>? Tasks { get; set; }
+        public List<ToDo>? ToDo { get; set; }
 
-        public int ParentList1Id { get; set; }
-        public Nursery? ParentList1 { get; set; }
-        public int ParentList2Id { get; set; }
-        public Garden? ParentList2 { get; set; }
+        public int? NurseryId { get; set; }
+        public Nursery? Nursery { get; set; }
+        public int? GardenId { get; set; }
+        public Garden? Garden { get; set; }
     }
 }

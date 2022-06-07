@@ -3,6 +3,7 @@ using System;
 using GardenersCalendar2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GardenersCalendar2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220606183841_AddedRAZORPages")]
+    partial class AddedRAZORPages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,16 +35,11 @@ namespace GardenersCalendar2.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("GardenerUserId")
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("GardenId");
-
-                    b.HasIndex("GardenerUserId");
 
                     b.ToTable("Gardens");
                 });
@@ -58,16 +55,11 @@ namespace GardenersCalendar2.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("GardenerUserId")
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("NurseryId");
-
-                    b.HasIndex("GardenerUserId");
 
                     b.ToTable("Nurseries");
                 });
@@ -83,21 +75,21 @@ namespace GardenersCalendar2.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<int?>("GardenId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("NurseryId")
+                    b.Property<int>("ParentList1Id")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ParentList2Id")
                         .HasColumnType("integer");
 
                     b.HasKey("PlantId");
 
-                    b.HasIndex("GardenId");
+                    b.HasIndex("ParentList1Id");
 
-                    b.HasIndex("NurseryId");
+                    b.HasIndex("ParentList2Id");
 
                     b.ToTable("Plants");
                 });
@@ -333,43 +325,29 @@ namespace GardenersCalendar2.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Garden", b =>
-                {
-                    b.HasOne("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", "GardenerUser")
-                        .WithMany("Gardens")
-                        .HasForeignKey("GardenerUserId");
-
-                    b.Navigation("GardenerUser");
-                });
-
-            modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Nursery", b =>
-                {
-                    b.HasOne("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", "GardenerUser")
-                        .WithMany("Nurseries")
-                        .HasForeignKey("GardenerUserId");
-
-                    b.Navigation("GardenerUser");
-                });
-
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Plant", b =>
                 {
-                    b.HasOne("GardenersCalendar2.Data.EFClasses.Garden", "Garden")
+                    b.HasOne("GardenersCalendar2.Data.EFClasses.Nursery", "ParentList1")
                         .WithMany("Plants")
-                        .HasForeignKey("GardenId");
+                        .HasForeignKey("ParentList1Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("GardenersCalendar2.Data.EFClasses.Nursery", "Nursery")
+                    b.HasOne("GardenersCalendar2.Data.EFClasses.Garden", "ParentList2")
                         .WithMany("Plants")
-                        .HasForeignKey("NurseryId");
+                        .HasForeignKey("ParentList2Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Garden");
+                    b.Navigation("ParentList1");
 
-                    b.Navigation("Nursery");
+                    b.Navigation("ParentList2");
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.ToDo", b =>
                 {
                     b.HasOne("GardenersCalendar2.Data.EFClasses.Plant", "ParentList")
-                        .WithMany("ToDo")
+                        .WithMany("Tasks")
                         .HasForeignKey("ParentListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -440,14 +418,7 @@ namespace GardenersCalendar2.Migrations
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Plant", b =>
                 {
-                    b.Navigation("ToDo");
-                });
-
-            modelBuilder.Entity("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", b =>
-                {
-                    b.Navigation("Gardens");
-
-                    b.Navigation("Nurseries");
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

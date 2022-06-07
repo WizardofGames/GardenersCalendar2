@@ -22,11 +22,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\Gardens\" />
-    <Folder Include="Pages\Jobs\" />
-    <Folder Include="Pages\Plants\" />
-    <Folder Include="Pages\Nurseries\" />
-  </ItemGroup>
-
 </Project>

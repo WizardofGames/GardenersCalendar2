@@ -7,10 +7,10 @@ namespace GardenersCalendar2.Data
 {
     public class ApplicationDbContext : IdentityDbContext<GardenerUserClass>
     {
-        public DbSet<Garden> Gardens { get; set; }
-        public DbSet<Nursery> Nurseries { get; set; }
-        public DbSet<Plant> Plants { get; set; }
-        public DbSet<ToDo> ToDos { get; set; }
+        public DbSet<Garden> Gardens { get; set; } = default!;
+        public DbSet<Nursery> Nurseries { get; set; } = default!;
+        public DbSet<Plant> Plants { get; set; } = default!;
+        public DbSet<ToDo> ToDos { get; set; } = default!;
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
