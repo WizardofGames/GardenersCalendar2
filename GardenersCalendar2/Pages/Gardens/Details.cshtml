@@ -1,6 +1,8 @@
 ﻿@page
 @model GardenersCalendar2.Pages.Gardens.DetailsModel
 
+@using PlantCreate = GardenersCalendar2.Pages.Plants.CreateModel
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -26,6 +28,7 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Garden?.GardenId">Edit</a> |
+    <a asp-page="./Edit" asp-route-id="@Model.Garden?.GardenId">Edit</a>
+    <a asp-page="/Plants/Create" asp-route-nurseryorgardenId="@Model.Garden?.GardenId" asp-route-parentIdType="@PlantCreate.ParentIdType.Garden">Create A Plant</a>|
     <a asp-page="./Index">Back to List</a>
 </div>

@@ -3,6 +3,7 @@ using System;
 using GardenersCalendar2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GardenersCalendar2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220608192026_ParentListIssues")]
+    partial class ParentListIssues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,7 +46,7 @@ namespace GardenersCalendar2.Migrations
 
                     b.HasIndex("GardenerUserId");
 
-                    b.ToTable("Gardens", (string)null);
+                    b.ToTable("Gardens");
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Nursery", b =>
@@ -69,7 +71,7 @@ namespace GardenersCalendar2.Migrations
 
                     b.HasIndex("GardenerUserId");
 
-                    b.ToTable("Nurseries", (string)null);
+                    b.ToTable("Nurseries");
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Plant", b =>
@@ -99,7 +101,7 @@ namespace GardenersCalendar2.Migrations
 
                     b.HasIndex("NurseryId");
 
-                    b.ToTable("Plants", (string)null);
+                    b.ToTable("Plants");
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.ToDo", b =>
@@ -130,7 +132,7 @@ namespace GardenersCalendar2.Migrations
 
                     b.HasIndex("PlantId");
 
-                    b.ToTable("ToDos", (string)null);
+                    b.ToTable("ToDos");
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", b =>

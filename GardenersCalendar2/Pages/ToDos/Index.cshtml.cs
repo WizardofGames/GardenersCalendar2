@@ -26,7 +26,7 @@ namespace GardenersCalendar2.Pages.ToDos
             if (_context.ToDos != null)
             {
                 ToDo = await _context.ToDos
-                .Include(t => t.ParentList).ToListAsync();
+                .Include(t => t.Plant).ToListAsync();
             }
         }
     }

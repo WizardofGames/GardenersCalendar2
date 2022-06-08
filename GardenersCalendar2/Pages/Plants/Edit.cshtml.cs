@@ -36,8 +36,8 @@ namespace GardenersCalendar2.Pages.Plants
                 return NotFound();
             }
             Plant = plant;
-           ViewData["ParentList1Id"] = new SelectList(_context.Nurseries, "NurseryId", "NurseryId");
-           ViewData["ParentList2Id"] = new SelectList(_context.Gardens, "GardenId", "GardenId");
+           ViewData["NurseryId"] = new SelectList(_context.Nurseries, "NurseryId", "Name");
+           ViewData["GardenId"] = new SelectList(_context.Gardens, "GardenId", "Name");
             return Page();
         }
 

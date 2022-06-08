@@ -11,8 +11,8 @@ namespace GardenersCalendar2.Data.EFClasses
         [DataType(DataType.Date)]
         public DateTime? DueDate { get; set; }
 
-        public int ParentListId { get; set; }
-        public Plant? ParentList { get; set; }
+        public int PlantId { get; set; }
+        public Plant? Plant { get; set; }
 
        
     }

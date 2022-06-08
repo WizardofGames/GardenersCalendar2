@@ -12,7 +12,7 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Plant.Name" class="control-label"></label>
                 <input asp-for="Plant.Name" class="form-control" />
@@ -25,11 +25,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="Plant.NurseryId" class="control-label"></label>
-                <select asp-for="Plant.NurseryId" class ="form-control" asp-items="ViewBag.ParentList1Id"></select>
+                <select asp-for="Plant.NurseryId" class ="form-control" asp-items="ViewBag.ParentList1Id">
+                    <option value="">Choose a Nursery</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Plant.GardenId" class="control-label"></label>
-                <select asp-for="Plant.GardenId" class ="form-control" asp-items="ViewBag.ParentList2Id"></select>
+                <select asp-for="Plant.GardenId" class ="form-control" asp-items="ViewBag.ParentList2Id">
+                    <option value="">Choose a Garden</option>
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

@@ -14,16 +14,44 @@ namespace GardenersCalendar2.Pages.Plants
     {
         private readonly GardenersCalendar2.Data.ApplicationDbContext _context;
 
+        public enum ParentIdType
+        {
+            None, Nursery, Garden
+        }
         public CreateModel(GardenersCalendar2.Data.ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet()
+
+        public IActionResult OnGet(int? nurseryOrGardenId, ParentIdType parentIdType)
         {
-        ViewData["ParentList1Id"] = new SelectList(_context.Nurseries, "NurseryId", "NurseryId");
-        ViewData["ParentList2Id"] = new SelectList(_context.Gardens, "GardenId", "GardenId");
+            PopulateDropDowns();
+
+            Plant = new Plant();
+
+            if (nurseryOrGardenId == null)
+            {
+
+            }
+
+            else if (parentIdType == ParentIdType.Nursery)
+            {
+                Plant.NurseryId = nurseryOrGardenId;
+            }
+
+            else if (parentIdType == ParentIdType.Garden)
+            {
+                Plant.GardenId = nurseryOrGardenId;
+            }
+
             return Page();
+        }
+
+        private void PopulateDropDowns()
+        {
+            ViewData["ParentList1Id"] = new SelectList(_context.Nurseries, "NurseryId", "Name");
+            ViewData["ParentList2Id"] = new SelectList(_context.Gardens, "GardenId", "Name");
         }
 
         [BindProperty]
@@ -35,6 +63,7 @@ namespace GardenersCalendar2.Pages.Plants
         {
           if (!ModelState.IsValid || _context.Plants == null || Plant == null)
             {
+                PopulateDropDowns();
                 return Page();
             }
 
