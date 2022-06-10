@@ -36,9 +36,14 @@ namespace GardenersCalendar2.Pages.Plants
                 return NotFound();
             }
             Plant = plant;
-           ViewData["NurseryId"] = new SelectList(_context.Nurseries, "NurseryId", "Name");
-           ViewData["GardenId"] = new SelectList(_context.Gardens, "GardenId", "Name");
+            PopulateDropDowns();
             return Page();
+        }
+
+        private void PopulateDropDowns()
+        {
+            ViewData["NurseryId"] = new SelectList(_context.Nurseries, "NurseryId", "Name");
+            ViewData["GardenId"] = new SelectList(_context.Gardens, "GardenId", "Name");
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -47,6 +52,7 @@ namespace GardenersCalendar2.Pages.Plants
         {
             if (!ModelState.IsValid)
             {
+                PopulateDropDowns();
                 return Page();
             }
 

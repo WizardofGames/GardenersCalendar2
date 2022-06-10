@@ -4,7 +4,7 @@ namespace GardenersCalendar2.Data.EFClasses
 {
     public class Nursery
     {
-        public string? GardenerUserId { get; set; }
+        public string GardenerUserId { get; set; }
         public GardenerUserClass? GardenerUser { get; set; }
         public int NurseryId { get; set; }
         public string Name { get; set; } = default!;

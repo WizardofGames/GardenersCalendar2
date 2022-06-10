@@ -7,13 +7,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GardenersCalendar2.Data;
 using GardenersCalendar2.Data.EFClasses;
+using Microsoft.AspNetCore.Identity;
+using GardenersCalendar2.Data.GardenerUserNS;
+using Microsoft.EntityFrameworkCore;
 
 namespace GardenersCalendar2.Pages.Plants
 {
     public class CreateModel : PageModel
     {
         private readonly GardenersCalendar2.Data.ApplicationDbContext _context;
-
+        private readonly UserManager<GardenerUserClass> _userManager;
         public enum ParentIdType
         {
             None, Nursery, Garden
@@ -50,13 +53,16 @@ namespace GardenersCalendar2.Pages.Plants
 
         private void PopulateDropDowns()
         {
-            ViewData["ParentList1Id"] = new SelectList(_context.Nurseries, "NurseryId", "Name");
-            ViewData["ParentList2Id"] = new SelectList(_context.Gardens, "GardenId", "Name");
+            //string LoggedInUserId = _userManager.GetUserId(User);
+            //Garden = await _context.Gardens.Where(g => g.GardenerUserId == LoggedInUserId).ToListAsync();
+            ViewData["NurseryId"] = new SelectList(_context.Nurseries, "NurseryId", "Name");
+            ViewData["GardenId"] = new SelectList((System.Collections.IEnumerable)_context.Gardens.Where(g => g.GardenerUserId == LoggedInUserId).ToListAsync());
         }
 
         [BindProperty]
         public Plant Plant { get; set; } = default!;
-        
+        public string LoggedInUserId { get; private set; }
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
