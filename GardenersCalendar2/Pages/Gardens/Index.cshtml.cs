@@ -29,7 +29,7 @@ namespace GardenersCalendar2.Pages.Gardens
             if (_context.Gardens != null)
             {
                 string LoggedInUserId = _userManager.GetUserId(User);
-                Garden = await _context.Gardens.ToListAsync();
+                Garden = await _context.Gardens.Where(g => g.GardenerUserId == LoggedInUserId).ToListAsync();
             }
         }
     }

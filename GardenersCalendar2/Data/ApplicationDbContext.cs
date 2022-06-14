@@ -11,6 +11,7 @@ namespace GardenersCalendar2.Data
         public DbSet<Nursery> Nurseries { get; set; } = default!;
         public DbSet<Plant> Plants { get; set; } = default!;
         public DbSet<ToDo> ToDos { get; set; } = default!;
+        public DbSet<ToDoTemplate> ToDoTemplates { get; set; } = default!;
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

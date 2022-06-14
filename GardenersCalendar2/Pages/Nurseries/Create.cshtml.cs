@@ -1,26 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using GardenersCalendar2.Data;
 using GardenersCalendar2.Data.EFClasses;
+using Microsoft.AspNetCore.Identity;
+using GardenersCalendar2.Data.GardenerUserNS;
 
 namespace GardenersCalendar2.Pages.Nurseries
 {
     public class CreateModel : PageModel
     {
-        private readonly GardenersCalendar2.Data.ApplicationDbContext _context;
-
-        public CreateModel(GardenersCalendar2.Data.ApplicationDbContext context)
+        private readonly Data.ApplicationDbContext _context;
+        private readonly UserManager<GardenerUserClass> _userManager;
+        public CreateModel(GardenersCalendar2.Data.ApplicationDbContext context, UserManager<GardenerUserClass> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult OnGet()
         {
+            string LoggedInGardenerId = _userManager.GetUserId(User);
+            Nursery = new Nursery();
+            Nursery.GardenerUserId = LoggedInGardenerId;
             return Page();
         }
 
@@ -36,6 +36,7 @@ namespace GardenersCalendar2.Pages.Nurseries
                 return Page();
             }
 
+            Nursery.GardenerUserId = _userManager.GetUserId(User);
             _context.Nurseries.Add(Nursery);
             await _context.SaveChangesAsync();
 

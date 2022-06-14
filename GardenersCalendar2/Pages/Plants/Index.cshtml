@@ -38,10 +38,10 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Nursery.NurseryId)
+                @Html.DisplayFor(modelItem => item.Nursery.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Garden.GardenId)
+                @Html.DisplayFor(modelItem => item.Garden.Name)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.PlantId">Edit</a> |

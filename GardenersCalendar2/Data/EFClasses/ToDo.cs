@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GardenersCalendar2.Data.GardenerUserNS;
+using System.ComponentModel.DataAnnotations;
 
 namespace GardenersCalendar2.Data.EFClasses
 {
@@ -13,7 +14,9 @@ namespace GardenersCalendar2.Data.EFClasses
 
         public int PlantId { get; set; }
         public Plant? Plant { get; set; }
+        public string? GardenerUserId { get; set; }
+        public GardenerUserClass? GardenerUser { get; set; }
 
-       
+
     }
 }

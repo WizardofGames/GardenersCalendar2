@@ -3,6 +3,7 @@ using System;
 using GardenersCalendar2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GardenersCalendar2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220611003044_After1On106102022")]
+    partial class After1On106102022
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,9 +120,6 @@ namespace GardenersCalendar2.Migrations
                     b.Property<DateTime?>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("GardenerUserId")
-                        .HasColumnType("text");
-
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("boolean");
 
@@ -132,8 +131,6 @@ namespace GardenersCalendar2.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("ToDoId");
-
-                    b.HasIndex("GardenerUserId");
 
                     b.HasIndex("PlantId");
 
@@ -402,17 +399,11 @@ namespace GardenersCalendar2.Migrations
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.ToDo", b =>
                 {
-                    b.HasOne("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", "GardenerUser")
-                        .WithMany()
-                        .HasForeignKey("GardenerUserId");
-
                     b.HasOne("GardenersCalendar2.Data.EFClasses.Plant", "Plant")
                         .WithMany("ToDo")
                         .HasForeignKey("PlantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("GardenerUser");
 
                     b.Navigation("Plant");
                 });

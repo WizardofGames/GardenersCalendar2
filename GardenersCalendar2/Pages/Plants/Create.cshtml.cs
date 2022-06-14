@@ -10,9 +10,11 @@ using GardenersCalendar2.Data.EFClasses;
 using Microsoft.AspNetCore.Identity;
 using GardenersCalendar2.Data.GardenerUserNS;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GardenersCalendar2.Pages.Plants
 {
+    [Authorize]
     public class CreateModel : PageModel
     {
         private readonly GardenersCalendar2.Data.ApplicationDbContext _context;
@@ -21,9 +23,10 @@ namespace GardenersCalendar2.Pages.Plants
         {
             None, Nursery, Garden
         }
-        public CreateModel(GardenersCalendar2.Data.ApplicationDbContext context)
+        public CreateModel(GardenersCalendar2.Data.ApplicationDbContext context, UserManager<GardenerUserClass> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
 
@@ -53,16 +56,15 @@ namespace GardenersCalendar2.Pages.Plants
 
         private void PopulateDropDowns()
         {
-            //string LoggedInUserId = _userManager.GetUserId(User);
+            string LoggedInUserId = _userManager.GetUserId(User);
             //Garden = await _context.Gardens.Where(g => g.GardenerUserId == LoggedInUserId).ToListAsync();
-            ViewData["NurseryId"] = new SelectList(_context.Nurseries, "NurseryId", "Name");
-            ViewData["GardenId"] = new SelectList((System.Collections.IEnumerable)_context.Gardens.Where(g => g.GardenerUserId == LoggedInUserId).ToListAsync());
+            ViewData["NurseryId"] = new SelectList(_context.Nurseries.Where(n => n.GardenerUserId == LoggedInUserId), "NurseryId", "Name");
+            ViewData["GardenId"] = new SelectList(_context.Gardens.Where(g => g.GardenerUserId == LoggedInUserId), "GardenId", "Name");
         }
 
         [BindProperty]
         public Plant Plant { get; set; } = default!;
-        public string LoggedInUserId { get; private set; }
-
+        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
