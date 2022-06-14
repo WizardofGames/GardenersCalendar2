@@ -47,7 +47,7 @@
                 @Html.DisplayFor(modelItem => item.DueDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Plant)
+                @Html.DisplayFor(modelItem => item.Plant.Name)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.ToDoId">Edit</a> |

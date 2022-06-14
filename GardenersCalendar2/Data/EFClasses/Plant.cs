@@ -14,7 +14,9 @@ namespace GardenersCalendar2.Data.EFClasses
         public Nursery? Nursery { get; set; }
         public int? GardenId { get; set; }
         public Garden? Garden { get; set; }
-        
+        public string GardenerUserId { get; set; }
+        public GardenerUserClass? GardenerUser { get; set; }
+
 
         //public string Test = Microsoft.AspNetCore.Identity.AspNetUserManager.IdentityUser.Name.Value;
         //setting to something user specific above; foreach plant in the database, find me all the plants that belong to currentuser
