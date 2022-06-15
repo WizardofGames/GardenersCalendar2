@@ -50,6 +50,23 @@ namespace GardenersCalendar2.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ToDoTemplates",
+                columns: table => new
+                {
+                    ToDoTemplateId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    StartDayNumber = table.Column<int>(type: "integer", nullable: false),
+                    EndDayNumber = table.Column<int>(type: "integer", nullable: true),
+                    RecurrenceInterval = table.Column<int>(type: "integer", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ToDoTemplates", x => x.ToDoTemplateId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -155,6 +172,110 @@ namespace GardenersCalendar2.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Gardens",
+                columns: table => new
+                {
+                    GardenId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    GardenerUserId = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Gardens", x => x.GardenId);
+                    table.ForeignKey(
+                        name: "FK_Gardens_AspNetUsers_GardenerUserId",
+                        column: x => x.GardenerUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Nurseries",
+                columns: table => new
+                {
+                    NurseryId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    GardenerUserId = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Nurseries", x => x.NurseryId);
+                    table.ForeignKey(
+                        name: "FK_Nurseries_AspNetUsers_GardenerUserId",
+                        column: x => x.GardenerUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Plants",
+                columns: table => new
+                {
+                    PlantId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    NurseryId = table.Column<int>(type: "integer", nullable: true),
+                    GardenId = table.Column<int>(type: "integer", nullable: true),
+                    GardenerUserId = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Plants", x => x.PlantId);
+                    table.ForeignKey(
+                        name: "FK_Plants_AspNetUsers_GardenerUserId",
+                        column: x => x.GardenerUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Plants_Gardens_GardenId",
+                        column: x => x.GardenId,
+                        principalTable: "Gardens",
+                        principalColumn: "GardenId");
+                    table.ForeignKey(
+                        name: "FK_Plants_Nurseries_NurseryId",
+                        column: x => x.NurseryId,
+                        principalTable: "Nurseries",
+                        principalColumn: "NurseryId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ToDos",
+                columns: table => new
+                {
+                    ToDoId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
+                    IsCompleted = table.Column<bool>(type: "boolean", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    PlantId = table.Column<int>(type: "integer", nullable: false),
+                    GardenerUserId = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ToDos", x => x.ToDoId);
+                    table.ForeignKey(
+                        name: "FK_ToDos_AspNetUsers_GardenerUserId",
+                        column: x => x.GardenerUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ToDos_Plants_PlantId",
+                        column: x => x.PlantId,
+                        principalTable: "Plants",
+                        principalColumn: "PlantId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +312,41 @@ namespace GardenersCalendar2.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Gardens_GardenerUserId",
+                table: "Gardens",
+                column: "GardenerUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Nurseries_GardenerUserId",
+                table: "Nurseries",
+                column: "GardenerUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Plants_GardenerUserId",
+                table: "Plants",
+                column: "GardenerUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Plants_GardenId",
+                table: "Plants",
+                column: "GardenId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Plants_NurseryId",
+                table: "Plants",
+                column: "NurseryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ToDos_GardenerUserId",
+                table: "ToDos",
+                column: "GardenerUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ToDos_PlantId",
+                table: "ToDos",
+                column: "PlantId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -211,7 +367,22 @@ namespace GardenersCalendar2.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ToDos");
+
+            migrationBuilder.DropTable(
+                name: "ToDoTemplates");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Plants");
+
+            migrationBuilder.DropTable(
+                name: "Gardens");
+
+            migrationBuilder.DropTable(
+                name: "Nurseries");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

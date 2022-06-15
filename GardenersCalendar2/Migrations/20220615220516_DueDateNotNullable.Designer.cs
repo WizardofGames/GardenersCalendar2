@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GardenersCalendar2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220614164249_CorrectedNullValuesInPgadmin")]
-    partial class CorrectedNullValuesInPgadmin
+    [Migration("20220615220516_DueDateNotNullable")]
+    partial class DueDateNotNullable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -90,6 +90,9 @@ namespace GardenersCalendar2.Migrations
                     b.Property<int?>("GardenId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("GardenerUserId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -100,6 +103,8 @@ namespace GardenersCalendar2.Migrations
                     b.HasKey("PlantId");
 
                     b.HasIndex("GardenId");
+
+                    b.HasIndex("GardenerUserId");
 
                     b.HasIndex("NurseryId");
 
@@ -117,7 +122,7 @@ namespace GardenersCalendar2.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<DateTime?>("DueDate")
+                    b.Property<DateTime>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("GardenerUserId")
@@ -151,15 +156,21 @@ namespace GardenersCalendar2.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ToDoTemplateId"));
 
-                    b.Property<int>("DayNumber")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<int?>("EndDayNumber")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int?>("RecurrenceInterval")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StartDayNumber")
+                        .HasColumnType("integer");
 
                     b.HasKey("ToDoTemplateId");
 
@@ -394,11 +405,17 @@ namespace GardenersCalendar2.Migrations
                         .WithMany("Plants")
                         .HasForeignKey("GardenId");
 
+                    b.HasOne("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", "GardenerUser")
+                        .WithMany()
+                        .HasForeignKey("GardenerUserId");
+
                     b.HasOne("GardenersCalendar2.Data.EFClasses.Nursery", "Nursery")
                         .WithMany("Plants")
                         .HasForeignKey("NurseryId");
 
                     b.Navigation("Garden");
+
+                    b.Navigation("GardenerUser");
 
                     b.Navigation("Nursery");
                 });

@@ -10,7 +10,7 @@ namespace GardenersCalendar2.Data.EFClasses
         public string? Description { get; set; }
         public bool IsCompleted { get; set; }
         [DataType(DataType.Date)]
-        public DateTime? DueDate { get; set; }
+        public DateTime DueDate { get; set; }
 
         public int PlantId { get; set; }
         public Plant? Plant { get; set; }

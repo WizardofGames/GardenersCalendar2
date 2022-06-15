@@ -15,7 +15,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<GardenerUserClass>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<FullCalendarService>();
 builder.Services.AddScoped<ToDoService>();
+
 
 var app = builder.Build();
 

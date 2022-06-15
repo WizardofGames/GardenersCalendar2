@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GardenersCalendar2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220606183841_AddedRAZORPages")]
-    partial class AddedRAZORPages
+    [Migration("20220615193037_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,11 +35,17 @@ namespace GardenersCalendar2.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<string>("GardenerUserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("GardenId");
+
+                    b.HasIndex("GardenerUserId");
 
                     b.ToTable("Gardens");
                 });
@@ -55,11 +61,17 @@ namespace GardenersCalendar2.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<string>("GardenerUserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("NurseryId");
+
+                    b.HasIndex("GardenerUserId");
 
                     b.ToTable("Nurseries");
                 });
@@ -75,21 +87,26 @@ namespace GardenersCalendar2.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
+                    b.Property<int?>("GardenId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("GardenerUserId")
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ParentList1Id")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ParentList2Id")
+                    b.Property<int?>("NurseryId")
                         .HasColumnType("integer");
 
                     b.HasKey("PlantId");
 
-                    b.HasIndex("ParentList1Id");
+                    b.HasIndex("GardenId");
 
-                    b.HasIndex("ParentList2Id");
+                    b.HasIndex("GardenerUserId");
+
+                    b.HasIndex("NurseryId");
 
                     b.ToTable("Plants");
                 });
@@ -108,6 +125,10 @@ namespace GardenersCalendar2.Migrations
                     b.Property<DateTime?>("DueDate")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("GardenerUserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("boolean");
 
@@ -115,14 +136,45 @@ namespace GardenersCalendar2.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ParentListId")
+                    b.Property<int>("PlantId")
                         .HasColumnType("integer");
 
                     b.HasKey("ToDoId");
 
-                    b.HasIndex("ParentListId");
+                    b.HasIndex("GardenerUserId");
+
+                    b.HasIndex("PlantId");
 
                     b.ToTable("ToDos");
+                });
+
+            modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.ToDoTemplate", b =>
+                {
+                    b.Property<int>("ToDoTemplateId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ToDoTemplateId"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("EndDayNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("RecurrenceInterval")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("StartDayNumber")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ToDoTemplateId");
+
+                    b.ToTable("ToDoTemplates");
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", b =>
@@ -325,34 +377,66 @@ namespace GardenersCalendar2.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Garden", b =>
+                {
+                    b.HasOne("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", "GardenerUser")
+                        .WithMany("Gardens")
+                        .HasForeignKey("GardenerUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GardenerUser");
+                });
+
+            modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Nursery", b =>
+                {
+                    b.HasOne("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", "GardenerUser")
+                        .WithMany("Nurseries")
+                        .HasForeignKey("GardenerUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GardenerUser");
+                });
+
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Plant", b =>
                 {
-                    b.HasOne("GardenersCalendar2.Data.EFClasses.Nursery", "ParentList1")
+                    b.HasOne("GardenersCalendar2.Data.EFClasses.Garden", "Garden")
                         .WithMany("Plants")
-                        .HasForeignKey("ParentList1Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GardenId");
 
-                    b.HasOne("GardenersCalendar2.Data.EFClasses.Garden", "ParentList2")
+                    b.HasOne("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", "GardenerUser")
+                        .WithMany()
+                        .HasForeignKey("GardenerUserId");
+
+                    b.HasOne("GardenersCalendar2.Data.EFClasses.Nursery", "Nursery")
                         .WithMany("Plants")
-                        .HasForeignKey("ParentList2Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("NurseryId");
 
-                    b.Navigation("ParentList1");
+                    b.Navigation("Garden");
 
-                    b.Navigation("ParentList2");
+                    b.Navigation("GardenerUser");
+
+                    b.Navigation("Nursery");
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.ToDo", b =>
                 {
-                    b.HasOne("GardenersCalendar2.Data.EFClasses.Plant", "ParentList")
-                        .WithMany("Tasks")
-                        .HasForeignKey("ParentListId")
+                    b.HasOne("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", "GardenerUser")
+                        .WithMany()
+                        .HasForeignKey("GardenerUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ParentList");
+                    b.HasOne("GardenersCalendar2.Data.EFClasses.Plant", "Plant")
+                        .WithMany("ToDo")
+                        .HasForeignKey("PlantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GardenerUser");
+
+                    b.Navigation("Plant");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -418,7 +502,14 @@ namespace GardenersCalendar2.Migrations
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Plant", b =>
                 {
-                    b.Navigation("Tasks");
+                    b.Navigation("ToDo");
+                });
+
+            modelBuilder.Entity("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", b =>
+                {
+                    b.Navigation("Gardens");
+
+                    b.Navigation("Nurseries");
                 });
 #pragma warning restore 612, 618
         }
