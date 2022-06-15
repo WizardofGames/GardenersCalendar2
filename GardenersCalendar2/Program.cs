@@ -1,5 +1,6 @@
 using GardenersCalendar2.Data;
 using GardenersCalendar2.Data.GardenerUserNS;
+using GardenersCalendar2.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,6 +15,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<GardenerUserClass>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<ToDoService>();
 
 var app = builder.Build();
 

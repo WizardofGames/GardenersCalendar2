@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using GardenersCalendar2.Data.GardenerUserNS;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using System.ComponentModel.DataAnnotations;
+using GardenersCalendar2.Services;
 
 namespace GardenersCalendar2.Pages.Plants
 {
@@ -19,14 +21,16 @@ namespace GardenersCalendar2.Pages.Plants
     {
         private readonly GardenersCalendar2.Data.ApplicationDbContext _context;
         private readonly UserManager<GardenerUserClass> _userManager;
+        private readonly ToDoService _toDoService;
         public enum ParentIdType
         {
             None, Nursery, Garden
         }
-        public CreateModel(GardenersCalendar2.Data.ApplicationDbContext context, UserManager<GardenerUserClass> userManager)
+        public CreateModel(GardenersCalendar2.Data.ApplicationDbContext context, UserManager<GardenerUserClass> userManager, ToDoService toDoService)
         {
             _context = context;
             _userManager = userManager;
+            _toDoService = toDoService;
         }
 
 
@@ -35,6 +39,8 @@ namespace GardenersCalendar2.Pages.Plants
             PopulateDropDowns();
 
             Plant = new Plant();
+
+            Plant.GardenerUserId = _userManager.GetUserId(User);
 
             if (nurseryOrGardenId == null)
             {
@@ -65,6 +71,10 @@ namespace GardenersCalendar2.Pages.Plants
         [BindProperty]
         public Plant Plant { get; set; } = default!;
         
+        [BindProperty]
+        [DataType(DataType.Date)]
+        public DateTime? ToDoStartDate { get; set; }
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
@@ -75,8 +85,14 @@ namespace GardenersCalendar2.Pages.Plants
                 return Page();
             }
 
+            Plant.GardenerUserId = _userManager.GetUserId(User);
             _context.Plants.Add(Plant);
             await _context.SaveChangesAsync();
+
+            if (ToDoStartDate != null)
+            {
+                _toDoService.GeneratesToDosFromTemplates(Plant, ToDoStartDate.Value);
+            }
 
             return RedirectToPage("./Index");
         }

@@ -7,3 +7,28 @@
 <div class="text-center">
     <h1 class="display-4">Welcome to Gardeners' Calendar!</h1>
 </div>
+
+
+    <div id='calendar'></div>
+
+@section ExtraStyleSheets{
+    <link href='/lib/FullCalendar/main.css' rel='stylesheet' />
+    <script src='/lib/FullCalendar/main.js'></script>
+
+}
+
+@section Scripts{
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          events: [
+          {id: '1', title: 'my actual event',start: '2022-06-01'}, 
+        ]
+        });
+        calendar.render();
+      });
+
+    </script>
+}
