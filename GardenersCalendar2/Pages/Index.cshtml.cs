@@ -11,6 +11,7 @@ namespace GardenersCalendar2.Pages
         private readonly ApplicationDbContext _context;
         private readonly FullCalendarService _calendar;
         public string JsonForCalendarEvents { get; set; }
+        public List<ToDo> ToDos { get; set; }
 
         public IndexModel(ApplicationDbContext context, FullCalendarService calendar)
         {
@@ -21,6 +22,7 @@ namespace GardenersCalendar2.Pages
         public void OnGet()
         {
             List<ToDo> toDos = _context.ToDos.ToList();
+            ToDos = toDos;
             JsonForCalendarEvents = _calendar.ConvertListOfToDosToJson(toDos);
         }
     }

@@ -74,7 +74,16 @@ namespace GardenersCalendar2.Pages.Plants
                 }
             }
 
-            return RedirectToPage("./Index");
+            if (Plant.GardenId != null)
+            {
+                return RedirectToPage("/Gardens/Details", new {id=this.Plant.GardenId});
+            }
+
+            else
+            {
+                return RedirectToPage("/Nurseries/Details", new {id=this.Plant.NurseryId});
+            }
+            
         }
 
         private bool PlantExists(int id)

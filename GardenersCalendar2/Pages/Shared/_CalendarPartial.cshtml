@@ -1,0 +1,20 @@
+﻿@using GardenersCalendar2.Data.EFClasses
+@using GardenersCalendar2.Services
+
+@model List<ToDo>
+@inject FullCalendarService _calendar
+
+
+    <div id='calendar'></div>
+
+    <script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          events: @Html.Raw(_calendar.ConvertListOfToDosToJson(Model))
+        });
+        calendar.render();
+      });
+
+    </script>

@@ -32,3 +32,13 @@
     <a asp-page="/Plants/Create" asp-route-nurseryorgardenId="@Model.Garden?.GardenId" asp-route-parentIdType="@PlantCreate.ParentIdType.Garden">Create A Plant</a>|
     <a asp-page="./Index">Back to List</a>
 </div>
+<div class="CalendarContainer">
+    <partial name="_calendarPartial" for="ToDoList"></partial>
+</div>
+<div class="PlantListContainer">
+    <partial name="Plants/_PlantListPartial" for="Garden.Plants"></partial>
+</div>
+@section ExtraStyleSheets{
+    <link href='/lib/FullCalendar/main.css' rel='stylesheet' />
+    <script src='/lib/FullCalendar/main.js'></script>
+}
