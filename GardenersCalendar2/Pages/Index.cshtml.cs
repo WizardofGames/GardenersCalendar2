@@ -8,22 +8,22 @@ namespace GardenersCalendar2.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ApplicationDbContext _context;
-        private readonly FullCalendarService _calendar;
-        public string JsonForCalendarEvents { get; set; }
-        public List<ToDo> ToDos { get; set; }
+        //private readonly ApplicationDbContext _context;
+        //private readonly FullCalendarService _calendar;
+        //public string JsonForCalendarEvents { get; set; }
+        //public List<ToDo> ToDos { get; set; }
 
         public IndexModel(ApplicationDbContext context, FullCalendarService calendar)
         {
-            _context = context;
-            _calendar = calendar;
+            //_context = context;
+            //_calendar = calendar;
         }
 
         public void OnGet()
         {
-            List<ToDo> toDos = _context.ToDos.ToList();
-            ToDos = toDos;
-            JsonForCalendarEvents = _calendar.ConvertListOfToDosToJson(toDos);
+            //List<ToDo> toDos = _context.ToDos.ToList();
+            //ToDos = toDos;
+            //JsonForCalendarEvents = _calendar.ConvertListOfToDosToJson(toDos);
         }
     }
 }
