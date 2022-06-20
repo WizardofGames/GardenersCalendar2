@@ -9,6 +9,7 @@ using GardenersCalendar2.Data;
 using GardenersCalendar2.Data.EFClasses;
 using Microsoft.AspNetCore.Identity;
 using GardenersCalendar2.Data.GardenerUserNS;
+using GardenersCalendar2.Services;
 
 namespace GardenersCalendar2.Pages.Nurseries
 {
@@ -16,10 +17,17 @@ namespace GardenersCalendar2.Pages.Nurseries
     {
         private readonly GardenersCalendar2.Data.ApplicationDbContext _context;
         private readonly UserManager<GardenerUserClass> _userManager;
-        public IndexModel(GardenersCalendar2.Data.ApplicationDbContext context, UserManager<GardenerUserClass> userManager)
+        private readonly FullCalendarService _calendar;
+        public string JsonForCalendarEvents { get; set; }
+        public List<ToDo> ToDos { get; set; }
+
+
+        public IndexModel(GardenersCalendar2.Data.ApplicationDbContext context, UserManager<GardenerUserClass> userManager, FullCalendarService? calendar)
         {
             _context = context;
             _userManager = userManager;
+            _calendar = calendar;
+
         }
 
         public IList<Nursery> Nursery { get;set; } = default!;
@@ -30,6 +38,10 @@ namespace GardenersCalendar2.Pages.Nurseries
             {
                 string LoggedInUserId = _userManager.GetUserId(User);
                 Nursery = await _context.Nurseries.Where(n => n.GardenerUserId == LoggedInUserId).ToListAsync();
+                List<ToDo> toDos = _context.ToDos.ToList();
+                ToDos = toDos;
+                JsonForCalendarEvents = _calendar.ConvertListOfToDosToJson(toDos);
+
             }
         }
     }

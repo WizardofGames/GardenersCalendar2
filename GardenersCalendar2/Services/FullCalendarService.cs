@@ -42,5 +42,10 @@ namespace GardenersCalendar2.Services
             public bool AllDay { get; set; }
             public string Url { get; set; }
         }
+
+        internal string ConvertListOfToDosToJson(object toDos)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
