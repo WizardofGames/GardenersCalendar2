@@ -9,11 +9,10 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GardenersCalendar2.styles.css" asp-append-version="true" />
     @RenderSection("ExtraStyleSheets", false)
-    
+   
 </head>
-<body style='background: rgb(0, 200, 60)'>
-      
-    <header>
+<body style='background: #08db0f'>      
+    <header style='background: #87ceeb'>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-green border-bottom box-shadow mb-3">
             <div class="container">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -21,6 +20,13 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <style>
+                        a{
+                            font-family: 'Tahoma';
+                            font-size: 18px;
+                            margin: 7px;
+                        }
+                    </style>
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
@@ -49,7 +55,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top footer text-muted" style='background: #87ceeb'>
         <div class="container">
             &copy; 2022 - Gavin Selzer - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>

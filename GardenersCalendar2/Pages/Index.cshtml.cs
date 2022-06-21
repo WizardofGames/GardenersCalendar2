@@ -21,8 +21,8 @@ namespace GardenersCalendar2.Pages
 
         public void OnGet()
         {
-            List<ToDo> toDos = _context.ToDos.ToList();
-            ToDos = toDos;
+            //List<ToDo> toDos = _context.ToDos.ToList();
+            //ToDos = toDos;
             //JsonForCalendarEvents = _calendar.ConvertListOfToDosToJson(toDos);
         }
     }
