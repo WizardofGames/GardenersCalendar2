@@ -42,6 +42,10 @@
                 </select>
             </div>
             <div class="form-group">
+                <label asp-for="ToDoTemplateIds" class="control-label"></label>
+                <select multiple asp-for="ToDoTemplateIds" class ="form-control" asp-items="ViewBag.AllToDoTemplates"></select>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

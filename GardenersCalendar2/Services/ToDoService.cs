@@ -12,23 +12,28 @@ namespace GardenersCalendar2.Services
             _context = context;
         }
 
-        public void GeneratesToDosFromTemplates(Plant plant, DateTime firstSpringPlantingDate)
+        public void GeneratesToDosFromTemplates(Plant plant, DateTime firstSpringPlantingDate, List<int> toDoTemplateIds)
         {
             foreach (ToDoTemplate currentTemplate in _context.ToDoTemplates)
             {
-                for (int DayNumber = currentTemplate.StartDayNumber; DayNumber < currentTemplate.EndDayNumber; DayNumber += currentTemplate.RecurrenceInterval.Value)
+                if (toDoTemplateIds.Contains(currentTemplate.ToDoTemplateId))
                 {
-                    ToDo toDo = new ToDo
+                    for (int DayNumber = currentTemplate.StartDayNumber; DayNumber < currentTemplate.EndDayNumber; DayNumber += currentTemplate.RecurrenceInterval.Value)
                     {
-                        Name = currentTemplate.Name,
-                        Description = currentTemplate.Description,
-                        DueDate = firstSpringPlantingDate.AddDays(DayNumber),
-                        GardenerUserId = plant.GardenerUserId,
-                        IsCompleted = false,
-                        PlantId = plant.PlantId
-                    };
-                    _context.ToDos.Add(toDo);
+                        ToDo toDo = new ToDo
+                        {
+                            Name = currentTemplate.Name,
+                            Description = currentTemplate.Description,
+                            DueDate = firstSpringPlantingDate.AddDays(DayNumber),
+                            GardenerUserId = plant.GardenerUserId,
+                            IsCompleted = false,
+                            PlantId = plant.PlantId
+                        };
+                        _context.ToDos.Add(toDo);
+                    }
+
                 }
+
             }
 
             _context.SaveChanges();

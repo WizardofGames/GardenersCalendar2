@@ -66,6 +66,7 @@ namespace GardenersCalendar2.Pages.Plants
             //Garden = await _context.Gardens.Where(g => g.GardenerUserId == LoggedInUserId).ToListAsync();
             ViewData["NurseryId"] = new SelectList(_context.Nurseries.Where(n => n.GardenerUserId == LoggedInUserId), "NurseryId", "Name");
             ViewData["GardenId"] = new SelectList(_context.Gardens.Where(g => g.GardenerUserId == LoggedInUserId), "GardenId", "Name");
+            ViewData["AllToDoTemplates"] = new SelectList(_context.ToDoTemplates, "ToDoTemplateId", "Name");
         }
 
         [BindProperty]
@@ -74,6 +75,9 @@ namespace GardenersCalendar2.Pages.Plants
         [BindProperty]
         [DataType(DataType.Date)]
         public DateTime? ToDoStartDate { get; set; }
+
+        [BindProperty]
+        public List<int> ToDoTemplateIds { get; set; }
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
@@ -91,7 +95,7 @@ namespace GardenersCalendar2.Pages.Plants
 
             if (ToDoStartDate != null)
             {
-                _toDoService.GeneratesToDosFromTemplates(Plant, ToDoStartDate.Value);
+                _toDoService.GeneratesToDosFromTemplates(Plant, ToDoStartDate.Value, ToDoTemplateIds);
             }
 
             return RedirectToPage("./Index");

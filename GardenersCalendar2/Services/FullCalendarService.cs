@@ -30,10 +30,10 @@ namespace GardenersCalendar2.Services
             public CalendarEvent(ToDo toDo)
             {
                 this.Id = toDo.ToDoId.ToString();
-                this.Title = toDo.Name;
+                this.Title = toDo.Plant.Name;
                 this.Start = toDo.DueDate;
                 this.AllDay = true;
-                this.Url = $"/Plants/Details?id={toDo.PlantId}";
+                this.Url = $"/ToDos/?id={toDo.PlantId}&dueDate={toDo.DueDate}";
 
             }
             public string Id { get; set; }

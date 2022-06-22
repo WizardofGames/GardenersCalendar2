@@ -12,7 +12,11 @@
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          events: @Html.Raw(_calendar.ConvertListOfToDosToJson(Model))
+          events: @Html.Raw(_calendar.ConvertListOfToDosToJson(Model)),
+          dateClick: function(infoFromClick){
+              let destinationUrl = "/ToDos/?dueDate=" + infoFromClick.dateStr
+              location.href=destinationUrl
+          }
         });
         calendar.render();
       });

@@ -38,7 +38,7 @@ namespace GardenersCalendar2.Pages.Nurseries
             {
                 string LoggedInUserId = _userManager.GetUserId(User);
                 Nursery = await _context.Nurseries.Where(n => n.GardenerUserId == LoggedInUserId).ToListAsync();
-                List<ToDo> toDos = _context.ToDos.ToList();
+                List<ToDo> toDos = _context.ToDos.Include(t => t.Plant).ToList();
                 ToDos = toDos;
                 JsonForCalendarEvents = _calendar.ConvertListOfToDosToJson(toDos);
 

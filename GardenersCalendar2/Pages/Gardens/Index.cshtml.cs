@@ -10,9 +10,11 @@ using GardenersCalendar2.Data.EFClasses;
 using Microsoft.AspNetCore.Identity;
 using GardenersCalendar2.Data.GardenerUserNS;
 using GardenersCalendar2.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GardenersCalendar2.Pages.Gardens
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly GardenersCalendar2.Data.ApplicationDbContext _context;
@@ -37,7 +39,7 @@ namespace GardenersCalendar2.Pages.Gardens
                 Garden = await _context.Gardens.Where(g => g.GardenerUserId == LoggedInUserId).ToListAsync();
             }
 
-            List<ToDo> toDos = _context.ToDos.ToList();
+            List<ToDo> toDos = _context.ToDos.Include(t => t.Plant).ToList();
             ToDos = toDos;
             JsonForCalendarEvents = _calendar.ConvertListOfToDosToJson(toDos);
 
