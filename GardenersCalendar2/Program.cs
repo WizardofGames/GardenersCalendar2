@@ -1,6 +1,7 @@
 using GardenersCalendar2.Data;
 using GardenersCalendar2.Data.GardenerUserNS;
 using GardenersCalendar2.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,14 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<FullCalendarService>();
 builder.Services.AddScoped<ToDoService>();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+
+    // Register other policies here
+});
 
 var app = builder.Build();
 

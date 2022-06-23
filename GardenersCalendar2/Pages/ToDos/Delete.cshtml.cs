@@ -29,7 +29,7 @@ namespace GardenersCalendar2.Pages.ToDos
                 return NotFound();
             }
 
-            var todo = await _context.ToDos.FirstOrDefaultAsync(m => m.ToDoId == id);
+            var todo = await _context.ToDos.Include(t => t.Plant).FirstOrDefaultAsync(m => m.ToDoId == id);
 
             if (todo == null)
             {

@@ -26,7 +26,6 @@ namespace GardenersCalendar2.Services
                             Description = currentTemplate.Description,
                             DueDate = firstSpringPlantingDate.AddDays(DayNumber),
                             GardenerUserId = plant.GardenerUserId,
-                            IsCompleted = false,
                             PlantId = plant.PlantId
                         };
                         _context.ToDos.Add(toDo);

@@ -43,7 +43,7 @@ namespace GardenersCalendar2.Pages.ToDos
                     toDos = toDos.Where(t => t.DueDate.Date == dueDate.Value.Date);
                 }
 
-                ToDo = await toDos.ToListAsync();
+                ToDo = await toDos.OrderBy(t => t.DueDate).ThenBy(t => t.Plant.Name).ToListAsync();
 
             }
         }
