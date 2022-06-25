@@ -1,5 +1,6 @@
 ﻿using GardenersCalendar2.Data.GardenerUserNS;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GardenersCalendar2.Data.EFClasses
 {
@@ -10,12 +11,38 @@ namespace GardenersCalendar2.Data.EFClasses
         public string? Description { get; set; }
         public List<ToDo>? ToDo { get; set; }
 
+        [Display(Name = "Nursery")]
         public int? NurseryId { get; set; }
         public Nursery? Nursery { get; set; }
+        [Display(Name = "Garden")]
         public int? GardenId { get; set; }
         public Garden? Garden { get; set; }
         public string? GardenerUserId { get; set; }
         public GardenerUserClass? GardenerUser { get; set; }
+        
+        [NotMapped]
+        public string DropdownDescription
+        {
+            get
+            {
+                if(Garden != null)
+                {
+                    return $"{Name} - Garden {Garden.Name}";
+                }
+                else if(Nursery != null)
+                {
+                    return $"{Name} Nursery {Nursery.Name}";
+                }
+                else
+                {
+                    return Name;
+                }
+            }
+        }
+
+
+
+            
 
 
         //public string Test = Microsoft.AspNetCore.Identity.AspNetUserManager.IdentityUser.Name.Value;

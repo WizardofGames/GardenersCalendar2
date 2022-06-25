@@ -8,7 +8,7 @@
         public int StartDayNumber { get; set; }
         public int? EndDayNumber { get; set; }
         public int? RecurrenceInterval { get; set; }
-
+        public int GardenerUserId { get; set; }
 
     }
 }

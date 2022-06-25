@@ -8,6 +8,11 @@
 <h1>Create</h1>
 
 <h4>Plant</h4>
+
+<style>
+    div {width: 525px}
+</style>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -25,11 +30,6 @@
                 <span asp-validation-for="Plant.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ToDoStartDate" class="control-label">What date do you want to start this to-do?</label>
-                <input asp-for="ToDoStartDate" class="form-control" />
-                <span asp-validation-for="ToDoStartDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Plant.NurseryId" class="control-label"></label>
                 <select asp-for="Plant.NurseryId" class ="form-control" asp-items="ViewBag.NurseryId">
                     <option value="">Choose a Nursery</option>
@@ -42,9 +42,15 @@
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="ToDoTemplateIds" class="control-label"></label>
+                <label asp-for="ToDoTemplateIds" class="control-label">Pre-Set To-Do(s)</label>
                 <select multiple asp-for="ToDoTemplateIds" class ="form-control" asp-items="ViewBag.AllToDoTemplates"></select>
             </div>
+                        <div class="form-group">
+                <label asp-for="ToDoStartDate" class="control-label">Pre-Set To-Do Start Date(s)</label>
+                <input asp-for="ToDoStartDate" class="form-control" />
+                <span asp-validation-for="ToDoStartDate" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

@@ -35,8 +35,44 @@ namespace GardenersCalendar2.Services
 
             }
 
+
             _context.SaveChanges();
 
+        }
+        public void GeneratesRecurringToDosFromUserInput(string UserId, ToDoViewModel toDoViewModel)
+        {
+            if(toDoViewModel.RecurrenceInterval == null || toDoViewModel.RecurrenceInterval <= 0)
+            {
+                CreatesAToDoFromAToDoViewModel(UserId, toDoViewModel, toDoViewModel.StartDate);
+            }
+            else
+            {
+                for (DateTime transientVariableForDate = toDoViewModel.StartDate;
+                transientVariableForDate <= toDoViewModel.EndDate;
+                transientVariableForDate = transientVariableForDate.AddDays(toDoViewModel.RecurrenceInterval.Value))
+                {
+                    CreatesAToDoFromAToDoViewModel(UserId, toDoViewModel, transientVariableForDate);
+                }
+            }
+            
+
+
+
+            _context.SaveChanges();
+
+        }
+
+        private void CreatesAToDoFromAToDoViewModel(string UserId, ToDoViewModel toDoViewModel, DateTime dueDate)
+        {
+            ToDo toDo = new ToDo
+            {
+                Name = toDoViewModel.Name,
+                Description = toDoViewModel.Description,
+                DueDate = dueDate,
+                GardenerUserId = UserId,
+                PlantId = toDoViewModel.PlantId
+            };
+            _context.ToDos.Add(toDo);
         }
     }
 }

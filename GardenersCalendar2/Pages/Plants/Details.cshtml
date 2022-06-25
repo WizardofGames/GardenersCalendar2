@@ -39,5 +39,6 @@
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Plant?.PlantId">Edit</a> |
+    <a asp-page="/ToDos/Create" asp-route-plantId="@Model.Plant?.PlantId">Create A To-Do</a>|
     <a asp-page="./Index">Back to List</a>
 </div>

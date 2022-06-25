@@ -14,23 +14,33 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ToDo.Name" class="control-label"></label>
-                <input asp-for="ToDo.Name" class="form-control" />
-                <span asp-validation-for="ToDo.Name" class="text-danger"></span>
+                <label asp-for="ToDoVm.Name" class="control-label"></label>
+                <input asp-for="ToDoVm.Name" class="form-control" />
+                <span asp-validation-for="ToDoVm.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ToDo.Description" class="control-label"></label>
-                <input asp-for="ToDo.Description" class="form-control" />
-                <span asp-validation-for="ToDo.Description" class="text-danger"></span>
+                <label asp-for="ToDoVm.Description" class="control-label"></label>
+                <input asp-for="ToDoVm.Description" class="form-control" />
+                <span asp-validation-for="ToDoVm.Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ToDo.DueDate" class="control-label"></label>
-                <input asp-for="ToDo.DueDate" class="form-control" />
-                <span asp-validation-for="ToDo.DueDate" class="text-danger"></span>
+                <label asp-for="ToDoVm.StartDate" class="control-label"></label>
+                <input asp-for="ToDoVm.StartDate" class="form-control" />
+                <span asp-validation-for="ToDoVm.StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ToDo.PlantId" class="control-label"></label>
-                <select asp-for="ToDo.PlantId" class ="form-control" asp-items="ViewBag.ParentListId"></select>
+                <label asp-for="ToDoVm.EndDate" class="control-label"></label>
+                <input asp-for="ToDoVm.EndDate" class="form-control" />
+                <span asp-validation-for="ToDoVm.EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToDoVm.RecurrenceInterval" class="control-label"></label>
+                <input asp-for="ToDoVm.RecurrenceInterval" class="form-control" />
+                <span asp-validation-for="ToDoVm.RecurrenceInterval" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToDoVm.PlantId" class="control-label"></label>
+                <select asp-for="ToDoVm.PlantId" class ="form-control" asp-items="ViewBag.ParentListId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

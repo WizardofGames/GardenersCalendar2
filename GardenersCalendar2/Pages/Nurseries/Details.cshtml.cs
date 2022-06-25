@@ -13,6 +13,7 @@ namespace GardenersCalendar2.Pages.Nurseries
     public class DetailsModel : PageModel
     {
         private readonly GardenersCalendar2.Data.ApplicationDbContext _context;
+        public List<ToDo> ToDoList { get; set; }
 
         public DetailsModel(GardenersCalendar2.Data.ApplicationDbContext context)
         {
@@ -28,7 +29,7 @@ namespace GardenersCalendar2.Pages.Nurseries
                 return NotFound();
             }
 
-            var nursery = await _context.Nurseries.FirstOrDefaultAsync(m => m.NurseryId == id);
+            var nursery = await _context.Nurseries.Include(n => n.Plants).ThenInclude(p => p.ToDo).FirstOrDefaultAsync(m => m.NurseryId == id);
             if (nursery == null)
             {
                 return NotFound();
@@ -37,6 +38,7 @@ namespace GardenersCalendar2.Pages.Nurseries
             {
                 Nursery = nursery;
             }
+            ToDoList = Nursery.Plants.SelectMany(p => p.ToDo).ToList();
             return Page();
         }
     }
