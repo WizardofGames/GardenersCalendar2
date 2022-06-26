@@ -77,7 +77,7 @@ namespace GardenersCalendar2.Pages.Plants
         public DateTime? ToDoStartDate { get; set; }
 
         [BindProperty]
-        public List<int> ToDoTemplateIds { get; set; }
+        public List<int>? ToDoTemplateIds { get; set; }
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
