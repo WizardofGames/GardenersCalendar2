@@ -1,0 +1,14 @@
+﻿@page
+@model GardenersCalendar2.Pages.MasterCalendar.MasterCalendarModel
+@{
+}
+
+<h1>Master Calendar</h1>
+
+<partial name="_calendarPartial" for="ToDos"></partial>
+
+
+@section ExtraStyleSheets{
+    <link href='/lib/FullCalendar/main.css' rel='stylesheet' />
+    <script src='/lib/FullCalendar/main.js'></script>
+}

@@ -17,7 +17,7 @@ namespace GardenersCalendar2.Pages.Nurseries
     {
         private readonly GardenersCalendar2.Data.ApplicationDbContext _context;
         private readonly UserManager<GardenerUserClass> _userManager;
-        private readonly FullCalendarService _calendar;
+        //private readonly FullCalendarService _calendar;
         public string JsonForCalendarEvents { get; set; }
         public List<ToDo> ToDos { get; set; }
 
@@ -26,7 +26,7 @@ namespace GardenersCalendar2.Pages.Nurseries
         {
             _context = context;
             _userManager = userManager;
-            _calendar = calendar;
+            //_calendar = calendar;
 
         }
 
@@ -40,7 +40,7 @@ namespace GardenersCalendar2.Pages.Nurseries
                 Nursery = await _context.Nurseries.Where(n => n.GardenerUserId == LoggedInUserId).ToListAsync();
                 List<ToDo> toDos = _context.ToDos.Include(t => t.Plant).Where(t => t.GardenerUserId == _userManager.GetUserId(User)).ToList();
                 ToDos = toDos;
-                JsonForCalendarEvents = _calendar.ConvertListOfToDosToJson(toDos);
+                //JsonForCalendarEvents = _calendar.ConvertListOfToDosToJson(toDos);
 
             }
         }

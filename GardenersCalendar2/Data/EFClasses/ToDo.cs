@@ -3,12 +3,15 @@ using System.ComponentModel.DataAnnotations;
 
 namespace GardenersCalendar2.Data.EFClasses
 {
+    [Display(Name = "To-Do")]
     public class ToDo
     {
         public int ToDoId { get; set; }
         public string Name { get; set; } = default!;
         public string? Description { get; set; }
+        
         [DataType(DataType.Date)]
+        [Display(Name = "Due Date")]
         public DateTime DueDate { get; set; }
 
         public int PlantId { get; set; }

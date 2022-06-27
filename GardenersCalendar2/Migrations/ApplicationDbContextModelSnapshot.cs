@@ -45,7 +45,7 @@ namespace GardenersCalendar2.Migrations
 
                     b.HasIndex("GardenerUserId");
 
-                    b.ToTable("Gardens");
+                    b.ToTable("Gardens", (string)null);
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Nursery", b =>
@@ -71,7 +71,7 @@ namespace GardenersCalendar2.Migrations
 
                     b.HasIndex("GardenerUserId");
 
-                    b.ToTable("Nurseries");
+                    b.ToTable("Nurseries", (string)null);
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.Plant", b =>
@@ -106,7 +106,7 @@ namespace GardenersCalendar2.Migrations
 
                     b.HasIndex("NurseryId");
 
-                    b.ToTable("Plants");
+                    b.ToTable("Plants", (string)null);
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.ToDo", b =>
@@ -140,7 +140,7 @@ namespace GardenersCalendar2.Migrations
 
                     b.HasIndex("PlantId");
 
-                    b.ToTable("ToDos");
+                    b.ToTable("ToDos", (string)null);
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.EFClasses.ToDoTemplate", b =>
@@ -172,7 +172,7 @@ namespace GardenersCalendar2.Migrations
 
                     b.HasKey("ToDoTemplateId");
 
-                    b.ToTable("ToDoTemplates");
+                    b.ToTable("ToDoTemplates", (string)null);
                 });
 
             modelBuilder.Entity("GardenersCalendar2.Data.GardenerUserNS.GardenerUserClass", b =>
