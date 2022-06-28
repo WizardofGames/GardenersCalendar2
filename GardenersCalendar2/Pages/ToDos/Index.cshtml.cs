@@ -27,13 +27,17 @@ namespace GardenersCalendar2.Pages.ToDos
 
         public IList<ToDo> ToDo { get;set; } = default!;
 
-        public async Task OnGetAsync(int? id, DateTime? dueDate)
+        public async Task OnGetAsync(int? id, DateTime? dueDate, int? gardenId, int? nurseryId)
         {
             if (_context.ToDos != null)
             {
                 string loggedInUserId = _userManager.GetUserId(User);
 
-                IQueryable<ToDo> toDos = _context.ToDos.Include(t => t.Plant).Where(t => t.GardenerUserId == loggedInUserId);
+                IQueryable<ToDo> toDos = _context.ToDos
+                    .Include(t => t.Plant).ThenInclude(p => p.Garden)
+                    .Include(t => t.Plant).ThenInclude(p => p.Nursery)
+                    .Where(t => t.GardenerUserId == loggedInUserId);
+
                 if (id != null)
                 {
                     toDos = toDos.Where(t => t.PlantId == id);
@@ -42,6 +46,15 @@ namespace GardenersCalendar2.Pages.ToDos
                 {
                     toDos = toDos.Where(t => t.DueDate.Date == dueDate.Value.Date);
                 }
+                if (gardenId != null)
+                {
+                    toDos = toDos.Where(t => t.Plant.GardenId == gardenId.Value);
+                }
+                if (nurseryId != null)
+                {
+                    toDos = toDos.Where(t => t.Plant.NurseryId == nurseryId.Value);
+                }
+
 
                 ToDo = await toDos.OrderBy(t => t.DueDate).ThenBy(t => t.Plant.Name).ToListAsync();
 

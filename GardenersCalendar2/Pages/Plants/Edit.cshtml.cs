@@ -8,16 +8,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GardenersCalendar2.Data;
 using GardenersCalendar2.Data.EFClasses;
+using Microsoft.AspNetCore.Identity;
+using GardenersCalendar2.Data.GardenerUserNS;
 
 namespace GardenersCalendar2.Pages.Plants
 {
     public class EditModel : PageModel
     {
         private readonly GardenersCalendar2.Data.ApplicationDbContext _context;
+        private readonly UserManager<GardenerUserClass> _userManager;
 
-        public EditModel(GardenersCalendar2.Data.ApplicationDbContext context)
+        public EditModel(GardenersCalendar2.Data.ApplicationDbContext context, UserManager<GardenerUserClass> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -42,8 +46,9 @@ namespace GardenersCalendar2.Pages.Plants
 
         private void PopulateDropDowns()
         {
-            ViewData["NurseryId"] = new SelectList(_context.Nurseries, "NurseryId", "Name");
-            ViewData["GardenId"] = new SelectList(_context.Gardens, "GardenId", "Name");
+            string LoggedInUserId = _userManager.GetUserId(User);
+            ViewData["NurseryId"] = new SelectList(_context.Nurseries.Where(n => n.GardenerUserId == LoggedInUserId), "NurseryId", "Name");
+            ViewData["GardenId"] = new SelectList(_context.Gardens.Where(g => g.GardenerUserId == LoggedInUserId), "GardenId", "Name");
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.

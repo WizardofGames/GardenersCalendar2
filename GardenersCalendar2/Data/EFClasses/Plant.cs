@@ -27,11 +27,11 @@ namespace GardenersCalendar2.Data.EFClasses
             {
                 if(Garden != null)
                 {
-                    return $"{Name} - Garden {Garden.Name}";
+                    return $"{Name} - Garden: {Garden.Name}";
                 }
                 else if(Nursery != null)
                 {
-                    return $"{Name} Nursery {Nursery.Name}";
+                    return $"{Name} - Nursery: {Nursery.Name}";
                 }
                 else
                 {

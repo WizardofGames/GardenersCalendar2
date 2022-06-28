@@ -15,6 +15,12 @@
           events: @Html.Raw(_calendar.ConvertListOfToDosToJson(Model)),
           dateClick: function(infoFromClick){
               let destinationUrl = "/ToDos/?dueDate=" + infoFromClick.dateStr
+              if("@(ViewBag.nurseryIdIfExists)"){
+                  destinationUrl += "&nurseryId=@(ViewBag.nurseryIdIfExists)"
+              }
+              if("@(ViewBag.gardenIdIfExists)"){
+                  destinationUrl += "&gardenId=@(ViewBag.gardenIdIfExists)"
+              }
               location.href=destinationUrl
           }
         });

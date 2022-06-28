@@ -29,7 +29,7 @@ namespace GardenersCalendar2.Pages.Gardens
                 return NotFound();
             }
 
-            var garden = await _context.Gardens.FirstOrDefaultAsync(m => m.GardenId == id);
+            var garden = await _context.Gardens.Include(g => g.Plants).FirstOrDefaultAsync(m => m.GardenId == id);
 
             if (garden == null)
             {
@@ -48,11 +48,14 @@ namespace GardenersCalendar2.Pages.Gardens
             {
                 return NotFound();
             }
-            var garden = await _context.Gardens.FindAsync(id);
+            var garden = _context.Gardens
+                .Include(g => g.Plants)
+                .ThenInclude(p => p.ToDo).First(g => g.GardenId == id);
 
             if (garden != null)
             {
                 Garden = garden;
+                _context.Plants.RemoveRange(garden.Plants);
                 _context.Gardens.Remove(Garden);
                 await _context.SaveChangesAsync();
             }

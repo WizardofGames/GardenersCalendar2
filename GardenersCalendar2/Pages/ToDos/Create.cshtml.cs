@@ -30,9 +30,14 @@ namespace GardenersCalendar2.Pages.ToDos
 
         public IActionResult OnGet()
         {
-        ToDoVm.StartDate = DateTime.Today;
-        ToDoVm.EndDate = DateTime.Today;
-        ViewData["ParentListId"] = new SelectList(_context.Plants.Include(p => p.Garden).Include(p => p.Nursery).Where(t => t.GardenerUserId == _userManager.GetUserId(User)), "PlantId", "DropdownDescription");
+            ToDoVm.StartDate = DateTime.Today;
+            ToDoVm.EndDate = DateTime.Today;
+            IQueryable<Plant> plantsForLoggedInUser = _context.Plants
+                        .Include(p => p.Garden)
+                        .Include(p => p.Nursery)
+                        .Where(t => t.GardenerUserId == _userManager.GetUserId(User));
+
+            ViewData["ParentListId"] = new SelectList(plantsForLoggedInUser, "PlantId", "DropdownDescription");
             return Page();
         }
 

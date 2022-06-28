@@ -12,19 +12,19 @@ namespace GardenersCalendar2.Services
             _context = context;
         }
 
-        public void GeneratesToDosFromTemplates(Plant plant, DateTime firstSpringPlantingDate, List<int> toDoTemplateIds)
+        public void GeneratesToDosFromTemplates(Plant plant, DateTime firstSpringPlantingDate, DateTime lastFallHarvestDate, List<int> toDoTemplateIds)
         {
             foreach (ToDoTemplate currentTemplate in _context.ToDoTemplates)
             {
                 if (toDoTemplateIds.Contains(currentTemplate.ToDoTemplateId))
                 {
-                    for (int DayNumber = currentTemplate.StartDayNumber; DayNumber < currentTemplate.EndDayNumber; DayNumber += currentTemplate.RecurrenceInterval.Value)
+                    for (DateTime startDate = firstSpringPlantingDate.AddDays(currentTemplate.StartDayNumber); startDate <= lastFallHarvestDate; startDate = startDate.AddDays(currentTemplate.RecurrenceInterval.Value))
                     {
                         ToDo toDo = new ToDo
                         {
                             Name = currentTemplate.Name,
                             Description = currentTemplate.Description,
-                            DueDate = firstSpringPlantingDate.AddDays(DayNumber),
+                            DueDate = startDate,
                             GardenerUserId = plant.GardenerUserId,
                             PlantId = plant.PlantId
                         };

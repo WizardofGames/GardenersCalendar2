@@ -14,6 +14,7 @@
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <input type="hidden" asp-for="Plant.PlantId" />
+            <input type="hidden" asp-for="Plant.GardenerUserId" />
             <div class="form-group">
                 <label asp-for="Plant.Name" class="control-label"></label>
                 <input asp-for="Plant.Name" class="form-control" />

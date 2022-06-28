@@ -45,10 +45,15 @@
                 <label asp-for="ToDoTemplateIds" class="control-label">Recurring Pre-Set To-Do(s)</label>
                 <select multiple asp-for="ToDoTemplateIds" class ="form-control" asp-items="ViewBag.AllToDoTemplates"></select>
             </div>
-                        <div class="form-group">
-                <label asp-for="ToDoStartDate" class="control-label">Pre-Set To-Do Start Date(s)</label>
+            <div class="form-group">
+                <label asp-for="ToDoStartDate" class="control-label">Pre-Set To-Do(s) Start Date</label>
                 <input asp-for="ToDoStartDate" class="form-control" />
                 <span asp-validation-for="ToDoStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToDoEndDate" class="control-label">Pre-Set To-Do(s) End Date</label>
+                <input asp-for="ToDoEndDate" class="form-control" />
+                <span asp-validation-for="ToDoEndDate" class="text-danger"></span>
             </div>
 
             <div class="form-group">

@@ -36,6 +36,9 @@ namespace GardenersCalendar2.Pages.Plants
 
         public IActionResult OnGet(int? nurseryOrGardenId, ParentIdType parentIdType)
         {
+            ToDoStartDate = DateTime.Today;
+            ToDoEndDate = DateTime.Today;
+
             PopulateDropDowns();
 
             Plant = new Plant();
@@ -74,7 +77,11 @@ namespace GardenersCalendar2.Pages.Plants
         
         [BindProperty]
         [DataType(DataType.Date)]
-        public DateTime? ToDoStartDate { get; set; }
+        public DateTime ToDoStartDate { get; set; }
+        
+        [BindProperty]
+        [DataType(DataType.Date)]
+        public DateTime ToDoEndDate { get; set; }
 
         [BindProperty]
         public List<int>? ToDoTemplateIds { get; set; }
@@ -95,7 +102,7 @@ namespace GardenersCalendar2.Pages.Plants
 
             if (ToDoStartDate != null)
             {
-                _toDoService.GeneratesToDosFromTemplates(Plant, ToDoStartDate.Value, ToDoTemplateIds);
+                _toDoService.GeneratesToDosFromTemplates(Plant, ToDoStartDate, ToDoEndDate, ToDoTemplateIds);
             }
 
             return RedirectToPage("./Index");
