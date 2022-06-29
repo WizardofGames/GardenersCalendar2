@@ -1,19 +1,14 @@
 ﻿@page
-@model GardenersCalendar2.Pages.ToDos.IndexModel
+@model GardenersCalendar2.Pages.ToDos.DeleteMultipleModel
 
 @{
-    ViewData["Title"] = "Index";
-    bool encounterToday = false;
+    ViewData["Title"] = "DeleteMultiple";
 }
 
-<h1>To-Dos</h1>
+<h1>Complete Multiple</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-    <a href="#today-row">Go To Today</a>
-</p>
+<h3>Are you sure you want to complete all of these?</h3>
 
-<form method="get">
 <table class="table">
     <thead>
         <tr>
@@ -35,25 +30,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.ToDo[0].Plant)
             </th>
-            <th>
-                Check to Complete
-            </th>
-            <th class="action-link-header">
-                <button class="btn btn-link" type="submit" asp-page="/ToDos/DeleteMultiple">
-                   Complete All Checked
-                </button>
-            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model.ToDo) {
-            string holdsIdAttribute = "";
-            if (item.DueDate >= DateTime.Today && !encounterToday)
-            {
-                encounterToday = true;
-                holdsIdAttribute = "id=today-row";
-            }
-            <tr @holdsIdAttribute>
+        <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
@@ -72,15 +53,13 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Plant.Name)
             </td>
-            <td>
-                <input type="checkbox" name="checkCompleted" value="@item.ToDoId"/>
-            </td>
-            <td>
-                <a asp-page="./Delete" asp-route-id="@item.ToDoId">Complete</a>
-            </td>
         </tr>
 }
     </tbody>
 </table>
-</form>
 
+    <form method="post">
+        <select style="display: none" asp-items="ViewBag.CheckedSelectList" multiple asp-for="CheckCompleted"></select>
+        <input type="submit" value="Complete Multiple To-Dos" class="btn btn-warning" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
