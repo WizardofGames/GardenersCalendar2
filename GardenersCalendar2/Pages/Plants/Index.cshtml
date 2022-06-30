@@ -10,6 +10,8 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
+<form method="get">
 <table class="table">
     <thead>
         <tr>
@@ -25,7 +27,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.Plant[0].Garden)
             </th>
-            <th></th>
+            <th>
+                Check to Remove
+            </th>
+            <th class="action-link-header">
+                <button class="btn btn-link" type="submit" asp-page="/Plants/DeleteMultiple">
+                   Remove All Checked
+                </button>
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -44,11 +53,15 @@
                 @Html.DisplayFor(modelItem => item.Garden.Name)
             </td>
             <td>
+                <input type="checkbox" name="checkCompleted" value="@item.PlantId"/>
+            </td>
+            <td>
                 <a asp-page="./Edit" asp-route-id="@item.PlantId">Edit</a> |
                 <a asp-page="./Details" asp-route-id="@item.PlantId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.PlantId">Delete</a>
+                <a asp-page="./Delete" asp-route-id="@item.PlantId">Remove</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+</form>

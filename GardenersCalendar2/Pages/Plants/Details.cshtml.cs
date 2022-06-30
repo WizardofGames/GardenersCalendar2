@@ -28,7 +28,10 @@ namespace GardenersCalendar2.Pages.Plants
                 return NotFound();
             }
 
-            var plant = await _context.Plants.FirstOrDefaultAsync(m => m.PlantId == id);
+            var plant = await _context.Plants
+                .Include(p => p.Garden)
+                .Include(p => p.Nursery)
+                .FirstOrDefaultAsync(m => m.PlantId == id);
             if (plant == null)
             {
                 return NotFound();
